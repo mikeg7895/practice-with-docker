@@ -1,0 +1,41 @@
+services:
+  backend:
+    build: backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app:cached
+    networks:
+      - tasks
+    depends_on:
+      - db
+
+  frontend:
+    build: frontend/tasks
+    ports:
+      - 80:80
+    volumes:
+      - ./frontend/tasks:/app:cached
+    networks:
+      - tasks
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:17.4
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=tasks_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - db-task:/var/lib/postgresql/data
+    networks:
+      - tasks
+
+networks:
+  tasks:
+
+volumes:
+  db-task:
