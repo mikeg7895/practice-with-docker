@@ -49,7 +49,7 @@ def get_db():
 
 @app.get("/")
 def index():
-    return {"message": "Hello world"}
+    return {"message": "Hello hadrisson"}
 
 # Endpoint para obtener todas las tareas
 @app.get("/tasks", response_model=List[Task])
