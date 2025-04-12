@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 
-DATABASE_URL = "postgresql://postgres:password@db/tasks_db"
+DATABASE_URL = "postgresql://postgres:7ApUSb0ISgNrQqdAaPeW@database-1.czmsk6ei6chk.us-east-2.rds.amazonaws.com/tasks"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
