@@ -30,7 +30,7 @@ jobs:
             sudo docker pull mikeg7895/fullstack-backend
             sudo docker pull mikeg7895/fullstack-frontend
             sudo docker run --name backend --network fullstack-net -d -p 8000:8000 mikeg7895/fullstack-backend 
-            sudo docker run --name frontend --netowrk fullstack-net -d -p 80:80 mikeg7895/fullstack-frontend
+            sudo docker run --name frontend --network fullstack-net -d -p 80:80 mikeg7895/fullstack-frontend
           EOF
     
 
