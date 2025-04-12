@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/tasks';
+const API_URL = 'http://18.218.42.4:8000/tasks';
 
 function App() {
   const [tasks, setTasks] = useState([]);
