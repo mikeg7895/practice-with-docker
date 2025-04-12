@@ -1,4 +1,4 @@
-name: Deploy Github Pages and EC2
+name: Deploy EC2
 
 on:
   workflow_run:
@@ -33,26 +33,26 @@ jobs:
           EOF
     
 
-  deploy-github-pages:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
+  # deploy-github-pages:
+  #   if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with: 
-          node-version: 18
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with: 
+  #         node-version: 18
       
-      - name: Install Dependencies and build
-        run: |
-          npm install
-          npm run build
-        working-directory: frontend/tasks
+  #     - name: Install Dependencies and build
+  #       run: |
+  #         npm install
+  #         npm run build
+  #       working-directory: frontend/tasks
       
-      - name: Deploy Github Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: frontend/tasks/dist
+  #     - name: Deploy Github Pages
+  #       uses: JamesIves/github-pages-deploy-action@v4
+  #       with:
+  #         folder: frontend/tasks/dist
