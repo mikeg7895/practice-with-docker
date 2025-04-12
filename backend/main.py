@@ -47,6 +47,10 @@ def get_db():
     finally:
         db.close()
 
+@app.get("/")
+def index():
+    return {"message": "Hello world"}
+
 # Endpoint para obtener todas las tareas
 @app.get("/tasks", response_model=List[Task])
 def get_tasks(db: Session = Depends(get_db)):

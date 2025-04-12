@@ -1,4 +1,4 @@
-name: Deploy Github Pages
+name: Deploy Github Pages and EC2
 
 on:
   workflow_run:
@@ -10,6 +10,26 @@ permissions:
   contents: write
 
 jobs:
+  deploy-ec2:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Save key
+        run: |
+          echo ${{ secrets.EC2_KEY }} > key.pem
+          chmod 400 key.pem
+
+      - name: Pull container and run
+        run: |
+          ssh -i key.pem ubuntu@ec2-3-138-125-162.us-east-2.compute.amazonaws.com << 'EOF'
+            sudo docker stop backend || true
+            sudo docker rm backend || true
+            sudo docker pull mikeg7895/fullstack-backend
+            sudo docker run --name backend -d -p 8000:8000 mikeg7895/fullstack-backend 
+          EOF
+    
+
   deploy-github-pages:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
