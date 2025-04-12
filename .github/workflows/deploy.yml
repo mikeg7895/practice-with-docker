@@ -22,7 +22,7 @@ jobs:
 
       - name: Pull container and run
         run: |
-          ssh -i key.pem ubuntu@ec2-3-138-125-162.us-east-2.compute.amazonaws.com << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@ec2-3-138-125-162.us-east-2.compute.amazonaws.com << 'EOF'
             sudo docker stop backend || true
             sudo docker rm backend || true
             sudo docker pull mikeg7895/fullstack-backend
