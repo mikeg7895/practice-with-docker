@@ -23,13 +23,14 @@ jobs:
       - name: Pull container and run
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@ec2-3-138-125-162.us-east-2.compute.amazonaws.com << 'EOF'
+            sudo docker network create fullstack-net || true
             sudo docker stop backend frontend || true
             sudo docker rm backend frontend || true
             sudo docker rmi mikeg7895/fullstack-backend mikeg7895/fullstack-frontend || true
             sudo docker pull mikeg7895/fullstack-backend
-            sudo docker pull mikeg7895/fullstack-backend
-            sudo docker run --name backend -d -p 8000:8000 mikeg7895/fullstack-backend 
-            sudo docker run --name frontend -d -p 80:80 mikeg7895/fullstack-frontend
+            sudo docker pull mikeg7895/fullstack-frontend
+            sudo docker run --name backend --network fullstack-net -d -p 8000:8000 mikeg7895/fullstack-backend 
+            sudo docker run --name frontend --netowrk fullstack-net -d -p 80:80 mikeg7895/fullstack-frontend
           EOF
     
 
