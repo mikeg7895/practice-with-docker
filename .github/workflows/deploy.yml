@@ -22,14 +22,33 @@ jobs:
 
       - name: Pull container and run
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@ec2-3-22-71-113.us-east-2.compute.amazonaws.com << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i key.pem ssh -i "clave.pem" ubuntu@ec2-3-145-154-221.us-east-2.compute.amazonaws.com << 'EOF'
             sudo docker stop backend || true
             sudo docker rm backend || true
             sudo docker rmi mikeg7895/fullstack-backend || true
             sudo docker pull mikeg7895/fullstack-backend
             sudo docker run --name backend -d -p 8000:8000 mikeg7895/fullstack-backend 
           EOF
-    
+   
+  deploy-s3:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          aws-access-key-id: ${{ secrets.AWS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET }}
+
+      - name: Upload files to S3
+        run: aws s3 cp frontend/tasks/dist s3://frontend-tasks/ --recursive
+
+      
 
   # deploy-github-pages:
   #   if: ${{ github.event.workflow_run.conclusion == 'success' }}
