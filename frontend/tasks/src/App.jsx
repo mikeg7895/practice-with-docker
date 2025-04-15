@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://backend/tasks';
+const API_URL = 'http://lb-tasks-1560843452.us-east-2.elb.amazonaws.com/tasks';
 
 function App() {
   const [tasks, setTasks] = useState([]);
