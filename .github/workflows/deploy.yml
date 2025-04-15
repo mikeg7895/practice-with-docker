@@ -22,7 +22,7 @@ jobs:
 
       - name: Pull container and run
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ssh -i "clave.pem" ubuntu@ec2-3-145-154-221.us-east-2.compute.amazonaws.com << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i key.pem ssh -i "key.pem" ubuntu@ec2-3-145-154-221.us-east-2.compute.amazonaws.com << 'EOF'
             sudo docker stop backend || true
             sudo docker rm backend || true
             sudo docker rmi mikeg7895/fullstack-backend || true
@@ -38,6 +38,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 18
+      
+      - name: Install Dependencies and build
+        run: |
+          npm install
+          npm run build
+        working-directory: frontend/tasks
+      
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
